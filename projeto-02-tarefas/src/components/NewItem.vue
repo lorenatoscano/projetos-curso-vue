@@ -52,5 +52,6 @@ export default {
         background-color: #2196F3;
         border-top-right-radius: 8px;
         border-bottom-right-radius: 8px;
+        cursor: pointer;
     }
 </style>

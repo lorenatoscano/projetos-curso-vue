@@ -28,6 +28,15 @@ export default {
 			return Math.round(done/total * 100) || 0;
 		}
 	},
+	watch: {
+		tasks: {
+			deep: true, //Monitorar as mudanças dentro dos elementos
+			handler() {
+				//Converte a lista de tasks para string e seta no local storage
+				localStorage.setItem('tasks', JSON.stringify(this.tasks));
+			}	
+		}
+	},
 	methods: {
 		addTask(newTask) {
 			//Verifica se a tarefa já existe
@@ -52,6 +61,11 @@ export default {
 		toggleTaskState(i) {
 			this.tasks[i].pending = !this.tasks[i].pending;
 		}
+	},
+	created() {
+		const json = localStorage.getItem('tasks');
+		const array = JSON.parse(json);
+		this.tasks = Array.isArray(array) ? array : [];
 	}
 }
 </script>
