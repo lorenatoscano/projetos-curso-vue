@@ -1,6 +1,7 @@
 <template>
 	<div id="app">
 		<h1>Tarefas</h1>
+		<task-progress :progress="progress"/>
 		<new-item @taskAdded="addTask"/>
 		<task-list :tasks="tasks"
 			@taskDeleted="deleteTask"
@@ -11,12 +12,20 @@
 <script>
 import TaskList from './components/TaskList.vue'
 import NewItem from './components/NewItem.vue'
-// import Progress from './components/Progress.vue'
+import TaskProgress from './components/TaskProgress.vue'
 export default {
-	components: { TaskList, NewItem},
+	components: { TaskList, NewItem, TaskProgress},
 	data() {
 		return {
 			tasks: []
+		}
+	},
+	computed: {
+		progress() {
+			const total = this.tasks.length;
+			//Pega o tamanho do array formado pelas tarefas concluídas
+			const done = this.tasks.filter(t => !t.pending).length;
+			return Math.round(done/total * 100) || 0;
 		}
 	},
 	methods: {
